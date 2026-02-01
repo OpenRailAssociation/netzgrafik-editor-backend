@@ -50,6 +50,7 @@ public class AuthenticationService {
     public UserId getCurrentUserIdFromEmail() {
         val idString =
                 this.tryGetClaim(USER_ID_FROM_EMAIL_CLAIM)
+                        .or(() -> this.tryGetClaim(PREFERRED_USERNAME_CLAIM))
                         .orElseThrow(() -> new BadCredentialsException("User ID missing in token"))
                         .toLowerCase();
 
