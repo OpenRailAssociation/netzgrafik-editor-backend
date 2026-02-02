@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.7.3](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/compare/v2.7.2...v2.7.3) (2026-02-02)
+
+
+### Documentation
+
+* **CODE_OF_CONDUCT:** update email address ([574af72](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/574af72ee6324d7e2d907a2302ce538729cb2de3))
+
 ## [2.7.2](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/compare/v2.7.2...v2.7.2) (2026-02-01)
 
 
