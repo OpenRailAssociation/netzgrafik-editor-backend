@@ -28,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 
 import org.jooq.DSLContext;
+import org.jooq.conf.ParamType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -191,7 +192,7 @@ public class ProjectService {
                                                 .and(
                                                         PROJECTS_USERS
                                                                 .USER_ID
-                                                                .eq(
+                                                                .equalIgnoreCase(
                                                                         this.authenticationService
                                                                                 .getCurrentUserIdFromEmail()
                                                                                 .getValue())
@@ -202,10 +203,17 @@ public class ProjectService {
                                                                                         .getCurrentSubjectId()
                                                                                         .getValue()))));
 
-        return this.context
-                .selectFrom(PROJECTS)
-                .whereExists(filterCondition)
-                .fetch(this::mapProjectSummary);
+        // Build the final query
+        val query = this.context.selectFrom(PROJECTS).whereExists(filterCondition);
+
+        // 🔥 SQL in Konsole ausgeben
+        log.info("Generated SQL: {}", query.getSQL());
+        log.info("Bind values: {}", query.getBindValues());
+
+        // 🔥 Komplettes SQL inkl. Parameter loggen
+        log.info("Full SQL:\n{}", query.getSQL(ParamType.INLINED));
+
+        return query.fetch(this::mapProjectSummary);
     }
 
     @Transactional(readOnly = true)
