@@ -202,7 +202,7 @@ public class ProjectService {
                                                                                         .getCurrentSubjectId()
                                                                                         .getValue()))));
 
-         return this.context
+        return this.context
                 .selectFrom(PROJECTS)
                 .whereExists(filterCondition)
                 .fetch(this::mapProjectSummary);
