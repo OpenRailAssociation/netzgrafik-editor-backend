@@ -191,7 +191,7 @@ public class ProjectService {
                                                 .and(
                                                         PROJECTS_USERS
                                                                 .USER_ID
-                                                                .eq(
+                                                                .equalIgnoreCase(
                                                                         this.authenticationService
                                                                                 .getCurrentUserIdFromEmail()
                                                                                 .getValue())
