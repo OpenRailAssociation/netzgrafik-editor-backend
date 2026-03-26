@@ -201,7 +201,7 @@ public class ProjectService {
                                                                                         .authenticationService
                                                                                         .getCurrentSubjectId()
                                                                                         .getValue()))));
-
+        // ----------------------------------------------------------------------------------------------------
         return this.context
                 .selectFrom(PROJECTS)
                 .whereExists(filterCondition)
