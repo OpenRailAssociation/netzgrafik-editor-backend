@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.7.4](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/compare/v2.7.3...v2.7.3) (2026-03-26)
+
+
+### Bug Fixes
+
+* user email ignore equalIgnoreCase ([bac3a81](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/bac3a8156ec27b29e8a0fefb370de0526901a89a))
+
 ## [2.7.3](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/compare/v2.7.3...v2.7.3) (2026-03-26)
 
 
