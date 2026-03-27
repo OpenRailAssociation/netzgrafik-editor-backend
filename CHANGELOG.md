@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.7.5](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/compare/v2.7.3...v2.7.3) (2026-03-27)
+
+
+### Bug Fixes
+
+* changed user id -> retrieve from email if not exists from preferred_username
+ 
 ## [2.7.4](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/compare/v2.7.3...v2.7.3) (2026-03-26)
 
 
