@@ -41,20 +41,45 @@ public class AuthenticationService {
 
     private final DSLContext context;
 
-    public String getCurrentUserEmail() {
-        return this.tryGetClaim(PREFERRED_USERNAME_CLAIM)
-                .orElseThrow(() -> new BadCredentialsException("E-Mail missing in token"))
-                .toLowerCase();
+    public UserId getCurrentUserEmail() {
+        val idString =
+                this.tryGetClaim(USER_ID_FROM_EMAIL_CLAIM)
+                        .orElseThrow(() -> new BadCredentialsException("E-Mail missing in token"))
+                        .toLowerCase();
+        return UserId.of(idString);
+    }
+
+    public UserId getCurrentPreferredUsername() {
+        val idString =
+                this.tryGetClaim(PREFERRED_USERNAME_CLAIM)
+                        .orElseThrow(
+                                () ->
+                                        new BadCredentialsException(
+                                                "preferred_username missing in token"))
+                        .toLowerCase();
+        return UserId.of(idString);
     }
 
     public UserId getCurrentUserIdFromEmail() {
-        val idString =
-                this.tryGetClaim(USER_ID_FROM_EMAIL_CLAIM)
-                        .or(() -> this.tryGetClaim(PREFERRED_USERNAME_CLAIM))
-                        .orElseThrow(() -> new BadCredentialsException("User ID missing in token"))
-                        .toLowerCase();
-
-        return UserId.of(idString);
+        UserId userId;
+        try {
+            userId =
+                    UserId.of(this.tryGetClaim(USER_ID_FROM_EMAIL_CLAIM)
+                                            .orElseThrow(
+                                                    () ->
+                                                            new BadCredentialsException(
+                                                                    "E-Mail missing in token"))
+                                            .toLowerCase());
+        } catch (BadCredentialsException ex) {
+            userId =
+                    UserId.of(this.tryGetClaim(PREFERRED_USERNAME_CLAIM)
+                                            .orElseThrow(
+                                                    () ->
+                                                            new BadCredentialsException(
+                                                                    "preferred_username missing in token"))
+                                            .toLowerCase());
+        }
+        return userId;
     }
 
     public UserId getCurrentSubjectId() {
@@ -204,6 +229,7 @@ public class AuthenticationService {
     @Value
     @Builder
     public static class AuthorizationInfo {
+
         @NonNull Boolean readable;
 
         @NonNull Boolean writable;
