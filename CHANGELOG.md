@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.7.3](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/compare/v2.7.3...v2.7.3) (2026-03-27)
+
+
+### Bug Fixes
+
+* add new extra comment line ([6546503](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/654650399a735e3ced29eccc65a877b48715a6da))
+* change log ([32e898d](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/32e898df6c00d827d131538d9481961e2f32dc96))
+* redo / update name ([982db76](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/982db76e75a79397328b14933f2d94df8e756f53))
+* release 2.7.5 ([e23acbc](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/e23acbcea32f6a67b82fed81085a1c60d011c3c1))
+* undo change ([79fe9a6](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/79fe9a6d14b029470d42d808c6ff2e6dafbe33db))
+* user email ignore equalIgnoreCase ([bac3a81](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/bac3a8156ec27b29e8a0fefb370de0526901a89a))
+
 ## [2.7.5](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/compare/v2.7.3...v2.7.3) (2026-03-27)
 
 
