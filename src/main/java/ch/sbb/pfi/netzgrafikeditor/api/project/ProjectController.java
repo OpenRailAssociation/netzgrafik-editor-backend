@@ -11,7 +11,6 @@ import ch.sbb.pfi.netzgrafikeditor.common.ValidationErrorException;
 import jakarta.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -47,9 +46,9 @@ public class ProjectController {
         this.convertAllUsersToLowerCase(projectDto);
         this.assertValidUserIds(projectDto);
 
-        val id = this.projectService.create(projectDto);
+        var id = this.projectService.create(projectDto);
 
-        val uri =
+        var uri =
                 ServletUriComponentsBuilder.fromCurrentRequest()
                         .replacePath("/v1/projects/" + id.getValue())
                         .build()
@@ -105,7 +104,7 @@ public class ProjectController {
     }
 
     private void assertValidUserIds(Collection<String> userIds) throws ValidationErrorException {
-        val invalidUserIds =
+        var invalidUserIds =
                 userIds.stream()
                         .filter(id -> !USER_ID_AS_EMAIL_PATTERN.matcher(id).matches())
                         .collect(Collectors.toList());

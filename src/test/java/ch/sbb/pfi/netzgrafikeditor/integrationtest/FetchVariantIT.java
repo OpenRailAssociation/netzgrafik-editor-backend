@@ -12,8 +12,6 @@ import ch.sbb.pfi.netzgrafikeditor.integrationtest.helper.VersionRecordToDtoMapp
 import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.IntegrationTest;
 import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.testdata.VariantTestData;
 
-import lombok.val;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -40,7 +38,7 @@ public class FetchVariantIT extends IntegrationTest {
 
     @Test
     public void fetchVariant__expectExistingVersionForUserA() throws Exception {
-        val expectedVariant =
+        var expectedVariant =
                 VariantDto.builder()
                         .id(VariantId.of(VariantTestData.VARIANT.getId()))
                         .projectId(ProjectId.of(VariantTestData.PROJECT.getId()))
@@ -72,7 +70,7 @@ public class FetchVariantIT extends IntegrationTest {
 
     @Test
     public void fetchVariant__expectExistingVersionForUserB() throws Exception {
-        val expectedVariant =
+        var expectedVariant =
                 VariantDto.builder()
                         .id(VariantId.of(VariantTestData.VARIANT.getId()))
                         .projectId(ProjectId.of(VariantTestData.PROJECT.getId()))

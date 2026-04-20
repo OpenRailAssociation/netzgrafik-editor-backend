@@ -27,8 +27,6 @@ import ch.sbb.pfi.netzgrafikeditor.config.SecurityConfig;
 import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.IntegrationTest;
 import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.testdata.VersionTestData;
 
-import lombok.val;
-
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,10 +55,10 @@ public class CreateVariantFromVersionIT extends IntegrationTest {
     @Test
     public void createVariantFromSnapshot__expectCreatedVariant() throws Exception {
         // given
-        val variantCreateDto = VariantCreateFromVersionDto.builder().name("my variant").build();
+        var variantCreateDto = VariantCreateFromVersionDto.builder().name("my variant").build();
 
         // when
-        val postResult =
+        var postResult =
                 mockMvc.perform(
                                 post(
                                                 "/v1/versions/{versionId}/variant/new",
@@ -72,10 +70,10 @@ public class CreateVariantFromVersionIT extends IntegrationTest {
                         .andReturn();
 
         // then
-        val getNewVariantUrl = postResult.getResponse().getHeader(HttpHeaders.LOCATION);
-        val variantId = VariantId.of(Long.parseLong(postResult.getResponse().getContentAsString()));
+        var getNewVariantUrl = postResult.getResponse().getHeader(HttpHeaders.LOCATION);
+        var variantId = VariantId.of(Long.parseLong(postResult.getResponse().getContentAsString()));
 
-        val expectedVersion =
+        var expectedVersion =
                 VersionDto.builder()
                         .id(VersionId.of(0)) // ignored
                         .variantId(variantId)
@@ -87,7 +85,7 @@ public class CreateVariantFromVersionIT extends IntegrationTest {
                         .createdBy(UserId.of(USER_A))
                         .build();
 
-        val expectedVariant =
+        var expectedVariant =
                 VariantDto.builder()
                         .id(variantId)
                         .projectId(ProjectId.of(VARIANT.getProjectId()))
@@ -98,7 +96,7 @@ public class CreateVariantFromVersionIT extends IntegrationTest {
                         .isArchived(false)
                         .build();
 
-        val getNewVariantResult =
+        var getNewVariantResult =
                 mockMvc.perform(
                                 get(getNewVariantUrl)
                                         .contentType(MediaType.APPLICATION_JSON)
@@ -113,13 +111,13 @@ public class CreateVariantFromVersionIT extends IntegrationTest {
                                                         .assertEquals(expectedVariant)))
                         .andReturn();
 
-        val latestVersionId =
+        var latestVersionId =
                 jsonHandler
                         .createAccessor(getNewVariantResult.getResponse().getContentAsString())
                         .getIntegerByPath("/latestVersion/id")
                         .orElseThrow();
 
-        val getModelResult =
+        var getModelResult =
                 mockMvc.perform(
                                 get("/v1/versions/{versionId}/model", latestVersionId)
                                         .contentType("application/json;charset=UTF-8")

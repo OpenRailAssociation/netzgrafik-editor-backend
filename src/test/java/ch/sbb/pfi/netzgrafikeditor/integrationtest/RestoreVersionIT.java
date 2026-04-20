@@ -17,8 +17,6 @@ import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.IntegrationTest;
 import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.testdata.ProjectTestData;
 import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.testdata.VersionTestData;
 
-import lombok.val;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -46,7 +44,7 @@ public class RestoreVersionIT extends IntegrationTest {
         // given
 
         // when
-        val restoreVersionResult =
+        var restoreVersionResult =
                 mockMvc.perform(
                                 MockMvcRequestBuilders.post(
                                                 "/v1/versions/{versionId}/restore",
@@ -60,11 +58,11 @@ public class RestoreVersionIT extends IntegrationTest {
                         .andReturn();
 
         // then
-        val restoringSnapshotId =
+        var restoringSnapshotId =
                 VersionId.of(
                         Long.parseLong(restoreVersionResult.getResponse().getContentAsString()));
 
-        val expectedVersion =
+        var expectedVersion =
                 VersionDto.builder()
                         .id(restoringSnapshotId)
                         .variantId(VariantId.of(VersionTestData.RELEASE_VERSION_1.getVariantId()))
@@ -81,7 +79,7 @@ public class RestoreVersionIT extends IntegrationTest {
                         .createdBy(UserId.of(ProjectTestData.USER_A))
                         .build();
 
-        val expectedVariant =
+        var expectedVariant =
                 VariantDto.builder()
                         .id(VariantId.of(VersionTestData.RELEASE_VERSION_1.getVariantId()))
                         .projectId(ProjectId.of(VersionTestData.PROJECT.getId()))
@@ -113,7 +111,7 @@ public class RestoreVersionIT extends IntegrationTest {
         // given
 
         // when
-        val restoreVersionResult =
+        var restoreVersionResult =
                 mockMvc.perform(
                                 MockMvcRequestBuilders.post(
                                                 "/v1/versions/{versionId}/restore",
@@ -127,11 +125,11 @@ public class RestoreVersionIT extends IntegrationTest {
                         .andReturn();
 
         // then
-        val restoringSnapshotId =
+        var restoringSnapshotId =
                 VersionId.of(
                         Long.parseLong(restoreVersionResult.getResponse().getContentAsString()));
 
-        val expectedVersion =
+        var expectedVersion =
                 VersionDto.builder()
                         .id(restoringSnapshotId)
                         .variantId(
@@ -149,7 +147,7 @@ public class RestoreVersionIT extends IntegrationTest {
                         .createdBy(UserId.of(ProjectTestData.USER_A))
                         .build();
 
-        val expectedVariant =
+        var expectedVariant =
                 VariantDto.builder()
                         .id(VariantId.of(VersionTestData.RELEASE_VERSION_1.getVariantId()))
                         .projectId(ProjectId.of(VersionTestData.PROJECT.getId()))

@@ -16,8 +16,6 @@ import ch.sbb.pfi.netzgrafikeditor.config.SecurityConfig;
 import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.IntegrationTest;
 import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.testdata.VersionTestData;
 
-import lombok.val;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -43,9 +41,9 @@ public class CreateVersionIT extends IntegrationTest {
     @Test
     public void createAndFetchVersions__expectCreatedVersions() throws Exception {
         // create release
-        val createReleaseDto = VersionCreateReleaseDto.builder().comment("First Release").build();
+        var createReleaseDto = VersionCreateReleaseDto.builder().comment("First Release").build();
 
-        val releasePostResult =
+        var releasePostResult =
                 mockMvc.perform(
                                 post(
                                                 "/v1/versions/{baseVersionId}/release",
@@ -59,8 +57,8 @@ public class CreateVersionIT extends IntegrationTest {
                         .andExpect(status().isCreated())
                         .andReturn();
 
-        val releaseLocation = releasePostResult.getResponse().getHeader(HttpHeaders.LOCATION);
-        val releaseLocationId =
+        var releaseLocation = releasePostResult.getResponse().getHeader(HttpHeaders.LOCATION);
+        var releaseLocationId =
                 Long.parseLong(releasePostResult.getResponse().getContentAsString());
 
         mockMvc.perform(
@@ -93,14 +91,14 @@ public class CreateVersionIT extends IntegrationTest {
                 .andExpect(status().isNotFound());
 
         // create snapshot 1
-        val createSnapshot1Dto =
+        var createSnapshot1Dto =
                 VersionCreateSnapshotDto.builder()
                         .name("Snapshot 1")
                         .model("{\"x\":1234}")
                         .comment("snapshot 1 comment")
                         .build();
 
-        val snapshotPostResult =
+        var snapshotPostResult =
                 mockMvc.perform(
                                 post("/v1/versions/{baseVersionId}/snapshot", releaseLocationId)
                                         .contentType(MediaType.APPLICATION_JSON)
@@ -113,8 +111,8 @@ public class CreateVersionIT extends IntegrationTest {
                         .andExpect(status().isCreated())
                         .andReturn();
 
-        val snapshot1Location = snapshotPostResult.getResponse().getHeader(HttpHeaders.LOCATION);
-        val snapshot1LocationId =
+        var snapshot1Location = snapshotPostResult.getResponse().getHeader(HttpHeaders.LOCATION);
+        var snapshot1LocationId =
                 Long.parseLong(snapshotPostResult.getResponse().getContentAsString());
 
         mockMvc.perform(
@@ -139,14 +137,14 @@ public class CreateVersionIT extends IntegrationTest {
                                         .build()));
 
         // create snapshot 2
-        val createSnapshot2Dto =
+        var createSnapshot2Dto =
                 VersionCreateSnapshotDto.builder()
                         .name("Snapshot 2")
                         .model("{\"x\":4567}")
                         .comment("snapshot 2")
                         .build();
 
-        val snapshot2PostResult =
+        var snapshot2PostResult =
                 mockMvc.perform(
                                 post("/v1/versions/{baseVersionId}/snapshot", snapshot1LocationId)
                                         .contentType(MediaType.APPLICATION_JSON)
@@ -159,8 +157,8 @@ public class CreateVersionIT extends IntegrationTest {
                         .andExpect(status().isCreated())
                         .andReturn();
 
-        val snapshot2Location = snapshot2PostResult.getResponse().getHeader(HttpHeaders.LOCATION);
-        val snapshot2LocationId =
+        var snapshot2Location = snapshot2PostResult.getResponse().getHeader(HttpHeaders.LOCATION);
+        var snapshot2LocationId =
                 Long.parseLong(snapshot2PostResult.getResponse().getContentAsString());
 
         mockMvc.perform(
@@ -188,14 +186,14 @@ public class CreateVersionIT extends IntegrationTest {
     @Test
     public void createExistingRelease__expectConflict() throws Exception {
         // create snapshot as second user
-        val createSnapshotDto =
+        var createSnapshotDto =
                 VersionCreateSnapshotDto.builder()
                         .model("{}")
                         .name("Base Snapshot")
                         .comment("")
                         .build();
 
-        val postResult =
+        var postResult =
                 mockMvc.perform(
                                 post(
                                                 "/v1/versions/{baseVersionId}/snapshot",
@@ -209,10 +207,10 @@ public class CreateVersionIT extends IntegrationTest {
                         .andExpect(status().isCreated())
                         .andReturn();
 
-        val snapshotLocationId = Long.parseLong(postResult.getResponse().getContentAsString());
+        var snapshotLocationId = Long.parseLong(postResult.getResponse().getContentAsString());
 
         // create first release
-        val createReleaseDto = VersionCreateReleaseDto.builder().comment("First Release").build();
+        var createReleaseDto = VersionCreateReleaseDto.builder().comment("First Release").build();
 
         mockMvc.perform(
                         post(
@@ -237,7 +235,7 @@ public class CreateVersionIT extends IntegrationTest {
     @Test
     public void createExistingSnapshot__expectConflict() throws Exception {
         // create snapshot
-        val createSnapshotDto =
+        var createSnapshotDto =
                 VersionCreateSnapshotDto.builder()
                         .model("{}")
                         .name("Base Snapshot")
@@ -268,7 +266,7 @@ public class CreateVersionIT extends IntegrationTest {
 
     @Test
     public void createReleaseVersion__expectForbiddenWhenNotWritable() throws Exception {
-        val createReleaseDto = VersionCreateReleaseDto.builder().comment("First Release").build();
+        var createReleaseDto = VersionCreateReleaseDto.builder().comment("First Release").build();
 
         mockMvc.perform(
                         post(
@@ -284,7 +282,7 @@ public class CreateVersionIT extends IntegrationTest {
     @Test
     public void createSnapshotVersion__expectForbiddenWhenNotWritable() throws Exception {
         // create snapshot
-        val createSnapshotDto =
+        var createSnapshotDto =
                 VersionCreateSnapshotDto.builder()
                         .model("{}")
                         .name("Base Snapshot")

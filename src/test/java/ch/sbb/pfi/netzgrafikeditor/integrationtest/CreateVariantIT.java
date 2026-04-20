@@ -18,8 +18,6 @@ import ch.sbb.pfi.netzgrafikeditor.integrationtest.helper.UserHelper;
 import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.IntegrationTest;
 import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.testdata.ProjectTestData;
 
-import lombok.val;
-
 import org.jooq.impl.DSL;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,12 +40,12 @@ public class CreateVariantIT extends IntegrationTest {
 
     @Test
     public void createAndFetchVariants__expectCreatedVariant() throws Exception {
-        val variantCreateDto =
+        var variantCreateDto =
                 VariantCreateDto.builder().initialModel("{}").initialName("my variant").build();
 
-        val projectId = ProjectId.of(ProjectTestData.PROJECT_A.getId());
+        var projectId = ProjectId.of(ProjectTestData.PROJECT_A.getId());
 
-        val postResult =
+        var postResult =
                 mockMvc.perform(
                                 post("/v1/projects/{projectId}/variants", projectId.getValue())
                                         .contentType(MediaType.APPLICATION_JSON)
@@ -59,13 +57,13 @@ public class CreateVariantIT extends IntegrationTest {
                         .andExpect(status().isCreated())
                         .andReturn();
 
-        val location = postResult.getResponse().getHeader(HttpHeaders.LOCATION);
-        val locationId = Long.parseLong(postResult.getResponse().getContentAsString());
+        var location = postResult.getResponse().getHeader(HttpHeaders.LOCATION);
+        var locationId = Long.parseLong(postResult.getResponse().getContentAsString());
 
-        val latestVersionId =
+        var latestVersionId =
                 this.context.select(DSL.max(VERSIONS.ID)).from(VERSIONS).fetchOneInto(Long.class);
 
-        val expectedVersion =
+        var expectedVersion =
                 VersionDto.builder()
                         .id(VersionId.of(latestVersionId))
                         .variantId(VariantId.of(locationId))
@@ -77,7 +75,7 @@ public class CreateVariantIT extends IntegrationTest {
                         .createdBy(UserId.of(ProjectTestData.USER_A))
                         .build();
 
-        val expectedVariant =
+        var expectedVariant =
                 VariantDto.builder()
                         .id(VariantId.of(locationId))
                         .projectId(projectId)
@@ -108,10 +106,10 @@ public class CreateVariantIT extends IntegrationTest {
 
     @Test
     public void createVariants__expectForbiddenWhenNotWritable() throws Exception {
-        val variantCreateDto =
+        var variantCreateDto =
                 VariantCreateDto.builder().initialModel("{}").initialName("variant name").build();
 
-        val projectId = ProjectId.of(ProjectTestData.PROJECT_A.getId());
+        var projectId = ProjectId.of(ProjectTestData.PROJECT_A.getId());
 
         mockMvc.perform(
                         post("/v1/projects/{projectId}/variants", projectId.getValue())

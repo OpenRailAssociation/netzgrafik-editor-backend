@@ -24,8 +24,6 @@ import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.IntegrationTest;
 import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.testdata.VariantTestData;
 import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.testdata.VersionTestData;
 
-import lombok.val;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -52,7 +50,7 @@ public class DropSnapshotsIT extends IntegrationTest {
                 .andExpect(status().isNoContent())
                 .andReturn();
 
-        val expectedVariant =
+        var expectedVariant =
                 VariantDto.builder()
                         .id(VariantId.of(VariantTestData.VARIANT.getId()))
                         .projectId(ProjectId.of(PROJECT.getId()))
@@ -84,7 +82,7 @@ public class DropSnapshotsIT extends IntegrationTest {
                 .andExpect(status().isNoContent())
                 .andReturn();
 
-        val expectedVariant =
+        var expectedVariant =
                 VariantDto.builder()
                         .id(VariantId.of(VariantTestData.VARIANT.getId()))
                         .projectId(ProjectId.of(PROJECT.getId()))

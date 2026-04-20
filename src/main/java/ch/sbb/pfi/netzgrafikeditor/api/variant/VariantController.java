@@ -10,7 +10,6 @@ import ch.sbb.pfi.netzgrafikeditor.common.ForbiddenOperationException;
 import ch.sbb.pfi.netzgrafikeditor.common.NotFoundException;
 
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,9 +33,9 @@ public class VariantController {
     public ResponseEntity<VariantId> createVariant(
             @PathVariable ProjectId projectId, @RequestBody VariantCreateDto createDto)
             throws NotFoundException, ForbiddenOperationException {
-        val id = this.variantService.create(projectId, createDto);
+        var id = this.variantService.create(projectId, createDto);
 
-        val uri =
+        var uri =
                 ServletUriComponentsBuilder.fromCurrentRequest()
                         .replacePath("/v1/variants/" + id.getValue())
                         .build()
@@ -49,9 +48,9 @@ public class VariantController {
     public ResponseEntity<VariantId> createVariantFromVersion(
             @PathVariable VersionId versionId, @RequestBody VariantCreateFromVersionDto createDto)
             throws NotFoundException, ForbiddenOperationException {
-        val id = this.variantService.createFromVersion(versionId, createDto);
+        var id = this.variantService.createFromVersion(versionId, createDto);
 
-        val uri =
+        var uri =
                 ServletUriComponentsBuilder.fromCurrentRequest()
                         .replacePath("/v1/variants/" + id.getValue())
                         .build()

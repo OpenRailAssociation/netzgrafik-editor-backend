@@ -28,8 +28,6 @@ import ch.sbb.pfi.netzgrafikeditor.integrationtest.helper.VersionRecordToDtoMapp
 import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.IntegrationTest;
 import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.testdata.VariantTestData;
 
-import lombok.val;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -61,7 +59,7 @@ public class RaiseSnapshotsToNewestReleaseVersionIT extends IntegrationTest {
                 .andExpect(status().isOk());
 
         // then
-        val expectedRestoreSnapshot =
+        var expectedRestoreSnapshot =
                 RELEASE_VERSION_1
                         .copy()
                         .setId(0l) // ignored
@@ -71,7 +69,7 @@ public class RaiseSnapshotsToNewestReleaseVersionIT extends IntegrationTest {
                         .setCreatedAt(controllableNowProvider.now())
                         .setCreatedBy(USER_B);
 
-        val expectedLatestVersion =
+        var expectedLatestVersion =
                 SNAPSHOT_VERSION_2_1_USER_B
                         .copy()
                         .setId(0l) // ignored
@@ -79,7 +77,7 @@ public class RaiseSnapshotsToNewestReleaseVersionIT extends IntegrationTest {
                         .setSnapshotVersion(2)
                         .setCreatedAt(controllableNowProvider.now());
 
-        val expectedVariant =
+        var expectedVariant =
                 VariantDto.builder()
                         .id(VariantId.of(VARIANT.getId()))
                         .projectId(ProjectId.of(VariantTestData.PROJECT.getId()))
@@ -133,7 +131,7 @@ public class RaiseSnapshotsToNewestReleaseVersionIT extends IntegrationTest {
                 .andExpect(status().isOk());
 
         // then
-        val expectedRestoreSnapshot =
+        var expectedRestoreSnapshot =
                 RELEASE_VERSION_1
                         .copy()
                         .setId(0l) // ignored
@@ -143,7 +141,7 @@ public class RaiseSnapshotsToNewestReleaseVersionIT extends IntegrationTest {
                         .setCreatedAt(controllableNowProvider.now())
                         .setCreatedBy(USER_B);
 
-        val expectedLatestVersion =
+        var expectedLatestVersion =
                 SNAPSHOT_VERSION_2_1_USER_B
                         .copy()
                         .setId(0l) // ignored
@@ -151,7 +149,7 @@ public class RaiseSnapshotsToNewestReleaseVersionIT extends IntegrationTest {
                         .setSnapshotVersion(2)
                         .setCreatedAt(controllableNowProvider.now());
 
-        val expectedVariant =
+        var expectedVariant =
                 VariantDto.builder()
                         .id(VariantId.of(VARIANT.getId()))
                         .projectId(ProjectId.of(VariantTestData.PROJECT.getId()))
