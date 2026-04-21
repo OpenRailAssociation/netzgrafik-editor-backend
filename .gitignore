@@ -10,3 +10,4 @@
 /config/application*.yml
 /config/application*.properties
 localdb/db_pw
+.env
