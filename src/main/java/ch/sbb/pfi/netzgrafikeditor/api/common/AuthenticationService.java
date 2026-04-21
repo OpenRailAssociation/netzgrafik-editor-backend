@@ -18,7 +18,6 @@ import lombok.Builder;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
-import lombok.val;
 
 import org.jooq.Condition;
 import org.jooq.DSLContext;
@@ -42,7 +41,7 @@ public class AuthenticationService {
     private final DSLContext context;
 
     public UserId getCurrentUserEmail() {
-        val idString =
+        var idString =
                 this.tryGetClaim(USER_ID_FROM_EMAIL_CLAIM)
                         .orElseThrow(() -> new BadCredentialsException("E-Mail missing in token"))
                         .toLowerCase();
@@ -50,7 +49,7 @@ public class AuthenticationService {
     }
 
     public UserId getCurrentPreferredUsername() {
-        val idString =
+        var idString =
                 this.tryGetClaim(PREFERRED_USERNAME_CLAIM)
                         .orElseThrow(
                                 () ->
@@ -64,26 +63,28 @@ public class AuthenticationService {
         UserId userId;
         try {
             userId =
-                    UserId.of(this.tryGetClaim(USER_ID_FROM_EMAIL_CLAIM)
-                                            .orElseThrow(
-                                                    () ->
-                                                            new BadCredentialsException(
-                                                                    "E-Mail missing in token"))
-                                            .toLowerCase());
+                    UserId.of(
+                            this.tryGetClaim(USER_ID_FROM_EMAIL_CLAIM)
+                                    .orElseThrow(
+                                            () ->
+                                                    new BadCredentialsException(
+                                                            "E-Mail missing in token"))
+                                    .toLowerCase());
         } catch (BadCredentialsException ex) {
             userId =
-                    UserId.of(this.tryGetClaim(PREFERRED_USERNAME_CLAIM)
-                                            .orElseThrow(
-                                                    () ->
-                                                            new BadCredentialsException(
-                                                                    "preferred_username missing in token"))
-                                            .toLowerCase());
+                    UserId.of(
+                            this.tryGetClaim(PREFERRED_USERNAME_CLAIM)
+                                    .orElseThrow(
+                                            () ->
+                                                    new BadCredentialsException(
+                                                            "preferred_username missing in token"))
+                                    .toLowerCase());
         }
         return userId;
     }
 
     public UserId getCurrentSubjectId() {
-        val idString =
+        var idString =
                 this.tryGetClaim(Subject_Identifier_CLAIM)
                         .orElseThrow(
                                 () ->
@@ -132,8 +133,8 @@ public class AuthenticationService {
                 .fetchOptional()
                 .map(
                         record -> {
-                            val isArchived = record.getValue(PROJECTS.IS_ARCHIVED);
-                            val isEditor =
+                            var isArchived = record.getValue(PROJECTS.IS_ARCHIVED);
+                            var isEditor =
                                     Optional.ofNullable(record.getValue(PROJECTS_USERS.IS_EDITOR));
                             return this.getAuthorizationInfo(isArchived, isEditor, this.isAdmin());
                         })
@@ -166,9 +167,9 @@ public class AuthenticationService {
                 .fetchOptional()
                 .map(
                         record -> {
-                            val isProjectArchived = record.getValue(PROJECTS.IS_ARCHIVED);
-                            val isVariantArchived = record.getValue(VARIANTS.IS_ARCHIVED);
-                            val isEditor =
+                            var isProjectArchived = record.getValue(PROJECTS.IS_ARCHIVED);
+                            var isVariantArchived = record.getValue(VARIANTS.IS_ARCHIVED);
+                            var isEditor =
                                     Optional.ofNullable(record.getValue(PROJECTS_USERS.IS_EDITOR));
                             return this.getAuthorizationInfo(
                                     isProjectArchived || isVariantArchived,
@@ -206,9 +207,9 @@ public class AuthenticationService {
                 .fetchOptional()
                 .map(
                         record -> {
-                            val isProjectArchived = record.getValue(PROJECTS.IS_ARCHIVED);
-                            val isVariantArchived = record.getValue(PROJECTS.IS_ARCHIVED);
-                            val isEditor =
+                            var isProjectArchived = record.getValue(PROJECTS.IS_ARCHIVED);
+                            var isVariantArchived = record.getValue(PROJECTS.IS_ARCHIVED);
+                            var isEditor =
                                     Optional.ofNullable(record.getValue(PROJECTS_USERS.IS_EDITOR));
                             return this.getAuthorizationInfo(
                                     isProjectArchived || isVariantArchived,
@@ -220,9 +221,9 @@ public class AuthenticationService {
 
     private AuthorizationInfo getAuthorizationInfo(
             boolean isArchived, Optional<Boolean> isEditor, boolean isAdmin) {
-        val isReadable = isAdmin || isEditor.isPresent();
-        val isWritable = !isArchived && (isAdmin || isEditor.orElse(false));
-        val isDeletable = isArchived && (isAdmin || isEditor.orElse(false));
+        var isReadable = isAdmin || isEditor.isPresent();
+        var isWritable = !isArchived && (isAdmin || isEditor.orElse(false));
+        var isDeletable = isArchived && (isAdmin || isEditor.orElse(false));
         return new AuthorizationInfo(isReadable, isWritable, isDeletable);
     }
 

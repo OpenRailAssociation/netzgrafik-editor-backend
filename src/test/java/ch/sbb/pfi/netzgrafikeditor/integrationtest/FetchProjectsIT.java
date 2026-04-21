@@ -14,8 +14,6 @@ import ch.sbb.pfi.netzgrafikeditor.config.SecurityConfig;
 import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.IntegrationTest;
 import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.testdata.ProjectTestData;
 
-import lombok.val;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -44,7 +42,7 @@ class FetchProjectsIT extends IntegrationTest {
 
     @Test
     void fetchAllProjects__expectExistingProjectsAsAdmin() throws Exception {
-        val expectedProjects =
+        var expectedProjects =
                 Stream.of(ProjectTestData.PROJECT_A, ProjectTestData.PROJECT_B)
                         .map(this::mapProjectSummary)
                         .collect(Collectors.toList());
@@ -59,7 +57,7 @@ class FetchProjectsIT extends IntegrationTest {
 
     @Test
     void fetchAllProjects__expectExistingProjectsAsUserA() throws Exception {
-        val expectedProjects = List.of(this.mapProjectSummary(ProjectTestData.PROJECT_A));
+        var expectedProjects = List.of(this.mapProjectSummary(ProjectTestData.PROJECT_A));
         mockMvc.perform(
                         get("/v1/projects")
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -70,7 +68,7 @@ class FetchProjectsIT extends IntegrationTest {
 
     @Test
     void fetchAllProjects__expectExistingProjectsAsUserB() throws Exception {
-        val expectedProjects = List.of();
+        var expectedProjects = List.of();
         mockMvc.perform(
                         get("/v1/projects")
                                 .contentType(MediaType.APPLICATION_JSON)

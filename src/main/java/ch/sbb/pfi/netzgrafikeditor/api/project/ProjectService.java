@@ -25,7 +25,6 @@ import ch.sbb.pfi.netzgrafikeditor.common.NowProvider;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Service;
@@ -51,7 +50,7 @@ public class ProjectService {
 
     @Transactional
     public ProjectId create(ProjectCreateUpdateDto project) {
-        val record =
+        var record =
                 this.context
                         .newRecord(PROJECTS)
                         .setName(project.getName())
@@ -64,7 +63,7 @@ public class ProjectService {
 
         record.store();
 
-        val projectId = ProjectId.of(record.getId());
+        var projectId = ProjectId.of(record.getId());
 
         var writeUsersIncludingCurrentUser = new ArrayList<>(project.getWriteUsers());
         writeUsersIncludingCurrentUser.add(
@@ -138,7 +137,7 @@ public class ProjectService {
             throws NotFoundException, ForbiddenOperationException {
         this.authenticationService.getAuthorizationInfo(projectId).assertWritable();
 
-        val record =
+        var record =
                 this.context
                         .selectFrom(PROJECTS)
                         .where(PROJECTS.ID.eq(projectId.getValue()))
@@ -179,7 +178,7 @@ public class ProjectService {
 
     @Transactional(readOnly = true)
     public Collection<ProjectSummaryDto> getAll() {
-        val filterCondition =
+        var filterCondition =
                 this.authenticationService.isAdmin()
                         ? selectOne()
                         : selectOne()
@@ -210,18 +209,18 @@ public class ProjectService {
     @Transactional(readOnly = true)
     public ProjectDto getById(ProjectId projectId)
             throws NotFoundException, ForbiddenOperationException {
-        val authorizationInfo = this.authenticationService.getAuthorizationInfo(projectId);
+        var authorizationInfo = this.authenticationService.getAuthorizationInfo(projectId);
         authorizationInfo.assertReadable();
 
-        val projectsRecord =
+        var projectsRecord =
                 this.context
                         .fetchOptional(PROJECTS, PROJECTS.ID.eq(projectId.getValue()))
                         .orElseThrow(NotFoundException.of("projects", projectId));
 
-        val variantRecords =
+        var variantRecords =
                 this.context.fetch(VARIANTS, VARIANTS.PROJECT_ID.eq(projectId.getValue()));
-        val variantsMap = new HashMap<VariantId, VariantSummaryDto.VariantSummaryDtoBuilder>();
-        for (val variant : variantRecords) {
+        var variantsMap = new HashMap<VariantId, VariantSummaryDto.VariantSummaryDtoBuilder>();
+        for (var variant : variantRecords) {
             variantsMap.put(
                     VariantId.of(variant.getId()),
                     VariantSummaryDto.builder()
@@ -230,13 +229,13 @@ public class ProjectService {
                             .isArchived(variant.getIsArchived()));
         }
 
-        for (val releaseVersion : this.getLatestReleaseVersions(projectId)) {
+        for (var releaseVersion : this.getLatestReleaseVersions(projectId)) {
             variantsMap
                     .get(releaseVersion.getVariantId())
                     .latestReleaseVersion(Optional.of(releaseVersion));
         }
 
-        for (val snapshotVersion :
+        for (var snapshotVersion :
                 this.getLatestSnapshotVersions(
                         projectId,
                         authenticationService.getCurrentUserIdFromEmail(),
@@ -246,7 +245,7 @@ public class ProjectService {
                     .latestSnapshotVersion(Optional.of(snapshotVersion));
         }
 
-        val variants =
+        var variants =
                 variantsMap.values().stream()
                         .map(VariantSummaryDto.VariantSummaryDtoBuilder::build)
                         .filter(
@@ -255,16 +254,16 @@ public class ProjectService {
                                                 || variant.getLatestSnapshotVersion().isPresent())
                         .collect(Collectors.toList());
 
-        val projectsUsersRecords =
+        var projectsUsersRecords =
                 this.context.fetch(
                         PROJECTS_USERS, PROJECTS_USERS.PROJECT_ID.eq(projectId.getValue()));
         Predicate<ProjectsUsersRecord> isEditor = ProjectsUsersRecord::getIsEditor;
-        val writeUsers =
+        var writeUsers =
                 projectsUsersRecords.stream()
                         .filter(isEditor)
                         .map(ProjectsUsersRecord::getUserId)
                         .collect(Collectors.toList());
-        val readUsers =
+        var readUsers =
                 projectsUsersRecords.stream()
                         .filter(isEditor.negate())
                         .map(ProjectsUsersRecord::getUserId)

@@ -21,7 +21,6 @@ import ch.sbb.pfi.netzgrafikeditor.common.NowProvider;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 
 import org.jooq.DSLContext;
 import org.jooq.JSON;
@@ -49,10 +48,10 @@ public class VariantService {
             throws NotFoundException, ForbiddenOperationException {
         this.authenticationService.getAuthorizationInfo(projectId).assertWritable();
 
-        val now = this.nowProvider.now();
-        val userId = this.authenticationService.getCurrentUserIdFromEmail();
+        var now = this.nowProvider.now();
+        var userId = this.authenticationService.getCurrentUserIdFromEmail();
 
-        val variantRecord =
+        var variantRecord =
                 this.context
                         .newRecord(VARIANTS)
                         .setProjectId(projectId.getValue())
@@ -60,7 +59,7 @@ public class VariantService {
 
         variantRecord.store();
 
-        val variantId = variantRecord.getId();
+        var variantId = variantRecord.getId();
 
         this.context
                 .newRecord(VERSIONS)
@@ -117,7 +116,7 @@ public class VariantService {
             throws NotFoundException, ForbiddenOperationException {
         this.assertVersionExists(versionId);
 
-        val record =
+        var record =
                 this.context
                         .select(VERSIONS.asterisk(), VARIANTS.asterisk())
                         .from(VERSIONS)
@@ -126,14 +125,14 @@ public class VariantService {
                         .where(VERSIONS.ID.eq(versionId.getValue()))
                         .fetchAny();
 
-        val projectId = ProjectId.of(record.get(VARIANTS.PROJECT_ID));
+        var projectId = ProjectId.of(record.get(VARIANTS.PROJECT_ID));
 
         this.authenticationService.getAuthorizationInfo(projectId).assertWritable();
 
-        val now = this.nowProvider.now();
-        val userId = this.authenticationService.getCurrentUserIdFromEmail();
+        var now = this.nowProvider.now();
+        var userId = this.authenticationService.getCurrentUserIdFromEmail();
 
-        val variantRecord =
+        var variantRecord =
                 this.context
                         .newRecord(VARIANTS)
                         .setProjectId(projectId.getValue())
@@ -171,7 +170,7 @@ public class VariantService {
     @Transactional(readOnly = true)
     public VariantDto getById(VariantId variantId)
             throws NotFoundException, ForbiddenOperationException {
-        val authorizationInfo = this.authenticationService.getAuthorizationInfo(variantId);
+        var authorizationInfo = this.authenticationService.getAuthorizationInfo(variantId);
         authorizationInfo.assertReadable();
 
         return this.context
@@ -206,7 +205,7 @@ public class VariantService {
     public void dropSnapshots(VariantId variantId) throws NotFoundException {
         assertVariantExists(variantId);
 
-        val userId = this.authenticationService.getCurrentUserIdFromEmail();
+        var userId = this.authenticationService.getCurrentUserIdFromEmail();
 
         if (this.hasReleases(variantId)) {
             this.deleteAllSnapshots(variantId, userId);
@@ -243,9 +242,9 @@ public class VariantService {
         assertVariantExists(variantId);
         assertHasReleases(variantId);
 
-        val userId = this.authenticationService.getCurrentUserIdFromEmail();
+        var userId = this.authenticationService.getCurrentUserIdFromEmail();
 
-        val highestReleasedVersion =
+        var highestReleasedVersion =
                 this.tryFetchHighestReleaseVersion(variantId)
                         .orElseThrow(
                                 () ->
@@ -253,8 +252,8 @@ public class VariantService {
                                                 String.format(
                                                         "Variant %s has no releases", variantId)));
 
-        val snapshots = this.fetchSnapshots(variantId, userId);
-        val snapshotsBaseReleasedVersion =
+        var snapshots = this.fetchSnapshots(variantId, userId);
+        var snapshotsBaseReleasedVersion =
                 this.tryFetchSnapshotsBaseReleaseVersion(snapshots)
                         .orElseThrow(
                                 () ->
@@ -269,7 +268,7 @@ public class VariantService {
 
         this.deleteAllSnapshots(variantId, userId);
 
-        val restoreSnapshot =
+        var restoreSnapshot =
                 this.context
                         .newRecord(VERSIONS)
                         .setName(snapshotsBaseReleasedVersion.getName())
@@ -279,7 +278,7 @@ public class VariantService {
                                         snapshotsBaseReleasedVersion.getReleaseVersion()))
                         .setModel(snapshotsBaseReleasedVersion.getModel());
 
-        val newSnapshots =
+        var newSnapshots =
                 snapshots.stream()
                         .map(
                                 snapshot ->
@@ -290,7 +289,7 @@ public class VariantService {
                                                 .setModel(snapshot.getModel()));
 
         AtomicInteger count = new AtomicInteger(0);
-        val allNewSnapshots =
+        var allNewSnapshots =
                 Stream.concat(Stream.of(restoreSnapshot), newSnapshots)
                         .map(
                                 versionsRecord ->

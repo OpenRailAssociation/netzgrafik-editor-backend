@@ -18,8 +18,6 @@ import ch.sbb.pfi.netzgrafikeditor.config.SecurityConfig;
 import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.IntegrationTest;
 import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.testdata.VariantTestData;
 
-import lombok.val;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -46,8 +44,8 @@ public class UpdateVariantIT extends IntegrationTest {
                 .andExpect(status().isNoContent())
                 .andReturn();
 
-        val expectedVersion = this.mapVersion(VariantTestData.RELEASE_VERSION_1);
-        val expectedVariant =
+        var expectedVersion = this.mapVersion(VariantTestData.RELEASE_VERSION_1);
+        var expectedVariant =
                 VariantDto.builder()
                         .id(VariantId.of(VariantTestData.VARIANT.getId()))
                         .projectId(ProjectId.of(VariantTestData.VARIANT.getProjectId()))

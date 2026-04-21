@@ -24,7 +24,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 
 import org.jooq.DSLContext;
 import org.jooq.JSON;
@@ -50,7 +49,7 @@ public class VersionService {
             throws NotFoundException, ConflictException, ForbiddenOperationException {
         this.authenticationService.getAuthorizationInfo(baseVersionId).assertWritable();
 
-        val baseVersion =
+        var baseVersion =
                 context.fetchOptional(VERSIONS, VERSIONS.ID.eq(baseVersionId.getValue()))
                         .orElseThrow(NotFoundException.of("versions", baseVersionId));
 
@@ -67,7 +66,7 @@ public class VersionService {
             newSnapshotVersion = baseVersion.getSnapshotVersion() + 1;
         }
 
-        val userId = this.authenticationService.getCurrentUserIdFromEmail();
+        var userId = this.authenticationService.getCurrentUserIdFromEmail();
 
         this.assertNewSnapshotVersionAvailable(
                 VariantId.of(baseVersion.getVariantId()),
@@ -75,7 +74,7 @@ public class VersionService {
                 newSnapshotVersion,
                 userId);
 
-        val newVersion =
+        var newVersion =
                 this.context
                         .newRecord(VERSIONS)
                         .setVariantId(baseVersion.getVariantId())
@@ -95,7 +94,7 @@ public class VersionService {
     private void assertNewSnapshotVersionAvailable(
             VariantId variantId, int newReleaseVersion, int newSnapshotVersion, UserId newUserId)
             throws ConflictException {
-        val hasConflictingVersion =
+        var hasConflictingVersion =
                 this.context.fetchExists(
                         VERSIONS,
                         VERSIONS.VARIANT_ID.eq(variantId.getValue()),
@@ -121,7 +120,7 @@ public class VersionService {
             throws ConflictException, NotFoundException, ForbiddenOperationException {
         this.authenticationService.getAuthorizationInfo(snapshotVersionId).assertWritable();
 
-        val baseSnapshotVersion =
+        var baseSnapshotVersion =
                 context.fetchOptional(VERSIONS, VERSIONS.ID.eq(snapshotVersionId.getValue()))
                         .orElseThrow(NotFoundException.of("versions", snapshotVersionId));
 
@@ -129,9 +128,9 @@ public class VersionService {
                 VariantId.of(baseSnapshotVersion.getVariantId()),
                 baseSnapshotVersion.getReleaseVersion());
 
-        val userId = this.authenticationService.getCurrentUserIdFromEmail();
+        var userId = this.authenticationService.getCurrentUserIdFromEmail();
 
-        val newVersion =
+        var newVersion =
                 this.context
                         .newRecord(VERSIONS)
                         .setVariantId(baseSnapshotVersion.getVariantId())
@@ -153,14 +152,14 @@ public class VersionService {
     @Transactional
     public VersionId restore(VersionId versionToRestoreId)
             throws ConflictException, NotFoundException, ForbiddenOperationException {
-        val versionToRestore =
+        var versionToRestore =
                 this.context
                         .fetchOptional(VERSIONS, VERSIONS.ID.eq(versionToRestoreId.getValue()))
                         .orElseThrow(NotFoundException.of("versions", versionToRestoreId));
 
-        val latestVersion = this.getLatestVersion(VariantId.of(versionToRestore.getVariantId()));
+        var latestVersion = this.getLatestVersion(VariantId.of(versionToRestore.getVariantId()));
 
-        val comment =
+        var comment =
                 Optional.ofNullable(versionToRestore.getSnapshotVersion())
                         .map(
                                 snapshotVersion ->
@@ -173,7 +172,7 @@ public class VersionService {
                                                 "Wiederhergestellt aus Version %d",
                                                 versionToRestore.getReleaseVersion()));
 
-        val restoredVersion =
+        var restoredVersion =
                 this.createSnapshotVersion(
                         latestVersion.getId(),
                         VersionCreateSnapshotDto.builder()
@@ -194,7 +193,7 @@ public class VersionService {
 
     private void assertNewReleaseVersionAvailable(VariantId variantId, int newReleaseVersion)
             throws ConflictException {
-        val hasConflictingVersion =
+        var hasConflictingVersion =
                 this.context.fetchExists(
                         VERSIONS,
                         VERSIONS.VARIANT_ID.eq(variantId.getValue()),
@@ -231,7 +230,7 @@ public class VersionService {
     @Transactional(readOnly = true)
     public JsonNode getVersionModel(VersionId versionId)
             throws NotFoundException, JsonProcessingException {
-        val jsonModel =
+        var jsonModel =
                 this.context
                         .select(VERSIONS.MODEL)
                         .from(VERSIONS)

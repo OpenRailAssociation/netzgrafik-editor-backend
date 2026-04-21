@@ -18,8 +18,6 @@ import ch.sbb.pfi.netzgrafikeditor.config.SecurityConfig;
 import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.IntegrationTest;
 import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.testdata.ProjectTestData;
 
-import lombok.val;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
@@ -37,7 +35,7 @@ public class CreateProjectIT extends IntegrationTest {
 
     @Test
     public void createAndFetchProjects__expectCreatedProject() throws Exception {
-        val projectDraft =
+        var projectDraft =
                 ProjectCreateUpdateDto.builder()
                         .name("New fancy project")
                         .summary("Short summary")
@@ -46,7 +44,7 @@ public class CreateProjectIT extends IntegrationTest {
                         .readUsers(List.of(USER_B))
                         .build();
 
-        val postResult =
+        var postResult =
                 mockMvc.perform(
                                 post("/v1/projects")
                                         .contentType(MediaType.APPLICATION_JSON)
@@ -55,10 +53,10 @@ public class CreateProjectIT extends IntegrationTest {
                         .andExpect(status().isCreated())
                         .andReturn();
 
-        val location = postResult.getResponse().getHeader(HttpHeaders.LOCATION);
-        val locationId = Long.parseLong(postResult.getResponse().getContentAsString());
+        var location = postResult.getResponse().getHeader(HttpHeaders.LOCATION);
+        var locationId = Long.parseLong(postResult.getResponse().getContentAsString());
 
-        val expectedResponse =
+        var expectedResponse =
                 ProjectDto.builder()
                         .id(ProjectId.of(locationId))
                         .name(projectDraft.getName())

@@ -12,7 +12,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -44,9 +43,9 @@ public class VersionController {
             @PathVariable VersionId baseVersionId,
             @RequestBody VersionCreateSnapshotDto createSnapshotDto)
             throws NotFoundException, ConflictException, ForbiddenOperationException {
-        val id = versionService.createSnapshotVersion(baseVersionId, createSnapshotDto);
+        var id = versionService.createSnapshotVersion(baseVersionId, createSnapshotDto);
 
-        val uri =
+        var uri =
                 ServletUriComponentsBuilder.fromCurrentRequest()
                         .replacePath("/v1/versions/" + id.getValue())
                         .build()
@@ -68,9 +67,9 @@ public class VersionController {
             @PathVariable VersionId snapshotVersionId,
             @RequestBody VersionCreateReleaseDto createReleaseDto)
             throws NotFoundException, ConflictException, ForbiddenOperationException {
-        val id = versionService.createReleaseVersion(snapshotVersionId, createReleaseDto);
+        var id = versionService.createReleaseVersion(snapshotVersionId, createReleaseDto);
 
-        val uri =
+        var uri =
                 ServletUriComponentsBuilder.fromCurrentRequest()
                         .replacePath("/v1/versions/" + id.getValue())
                         .build()
@@ -82,9 +81,9 @@ public class VersionController {
     @PostMapping("/v1/versions/{versionId}/restore")
     public ResponseEntity<VersionId> restoreVersion(@PathVariable VersionId versionId)
             throws NotFoundException, ConflictException, ForbiddenOperationException {
-        val id = versionService.restore(versionId);
+        var id = versionService.restore(versionId);
 
-        val uri =
+        var uri =
                 ServletUriComponentsBuilder.fromCurrentRequest()
                         .replacePath("/v1/versions/" + id.getValue())
                         .build()

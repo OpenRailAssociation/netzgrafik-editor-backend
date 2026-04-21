@@ -17,8 +17,6 @@ import ch.sbb.pfi.netzgrafikeditor.config.SecurityConfig;
 import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.IntegrationTest;
 import ch.sbb.pfi.netzgrafikeditor.integrationtest.setup.testdata.ProjectTestData;
 
-import lombok.val;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -33,7 +31,7 @@ public class UpdateProjectIT extends IntegrationTest {
 
     @Test
     public void updateProject_expectProjectUpdated() throws Exception {
-        val updateDto =
+        var updateDto =
                 ProjectCreateUpdateDto.builder()
                         .name("New Name")
                         .summary("New Summary")
@@ -50,7 +48,7 @@ public class UpdateProjectIT extends IntegrationTest {
                 .andExpect(status().isNoContent())
                 .andReturn();
 
-        val expectedResponse =
+        var expectedResponse =
                 ProjectDto.builder()
                         .id(ProjectId.of(PROJECT_A.getId()))
                         .name(updateDto.getName())
@@ -83,7 +81,7 @@ public class UpdateProjectIT extends IntegrationTest {
                 .andExpect(status().isNoContent())
                 .andReturn();
 
-        val expectedResponse =
+        var expectedResponse =
                 ProjectDto.builder()
                         .id(ProjectId.of(PROJECT_A.getId()))
                         .name(PROJECT_A.getName())
