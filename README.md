@@ -54,11 +54,28 @@ on [Docker Compose](https://docs.docker.com/compose/) - powered by [Flatland Ass
 
 1. Setup environment variables
    ```shell
-   export DB_URL=jdbc:postgresql://localhost/netzgrafikeditor
-   export DB_USER=netzgrafikeditor
-   export DB_PASSWORD=netzgrafikeditor
-   export CORS_ALLOWED_ORIGINS=*
-   export AUTH_SERVICE_NAME=fc44839c-e95f-4854-a52d-449867a9aa62
+   export DB_HOST=localhost                                   # PostgreSQL host and optional :port
+   export DB_NAME=netzgrafikeditor                            # PostgreSQL database name
+   export DB_USER=netzgrafikeditor                            # Database user
+   export DB_PASSWORD=netzgrafikeditor                        # Database password
+   export DB_DRIVER_CLASS_NAME=org.postgresql.Driver          # JDBC driver class
+
+   export JWT_ISSUER_URI=http://localhost:8081/realms/netzgrafikeditor # JWT issuer URI
+   export AUTH_SERVICE_NAME=fc44839c-e95f-4854-a52d-449867a9aa62        # Expected JWT audience/service id
+
+   export JOOQ_SQL_DIALECT=Postgres                           # jOOQ SQL dialect
+   export FLYWAY_ENABLED=true                                 # Enable Flyway migrations on startup
+   export FLYWAY_FAIL_ON_MISSING_LOCATIONS=true               # Fail startup if migration locations are missing
+   export FLYWAY_LOCATIONS=classpath:db/migration             # Flyway migration scripts location
+
+   export CORS_PATH_MAPPINGS=/**                              # Path mapping for CORS rules
+   export CORS_ALLOWED_ORIGINS=*                              # Allowed browser origins for CORS
+   export CORS_ALLOWED_METHODS=GET,POST,PUT,DELETE            # Allowed HTTP methods for CORS
+   export CORS_ALLOWED_HEADERS=*                              # Allowed HTTP headers for CORS
+
+   export SPRING_LOG_LEVEL=INFO                               # Spring framework log level
+   export SPRINGDOC_API_DOCS_ENABLED=false                    # Enable OpenAPI JSON endpoint
+   export SPRINGDOC_SWAGGER_UI_ENABLED=false                  # Enable Swagger UI endpoint
    ```
 
 1. Start the app using maven
