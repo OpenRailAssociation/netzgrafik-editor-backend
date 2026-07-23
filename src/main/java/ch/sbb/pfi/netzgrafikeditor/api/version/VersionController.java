@@ -9,7 +9,6 @@ import ch.sbb.pfi.netzgrafikeditor.common.ForbiddenOperationException;
 import ch.sbb.pfi.netzgrafikeditor.common.NotFoundException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -99,8 +99,17 @@ public class VersionController {
     }
 
     @GetMapping(value = "/v1/versions/{versionId}/model")
-    public JsonNode getVersionModel(@PathVariable VersionId versionId)
+    public ResponseEntity<?> getVersionModel(
+            @PathVariable VersionId versionId,
+            @RequestParam(value = "bypassJackson", required = false, defaultValue = "false")
+                    boolean bypassJackson)
             throws NotFoundException, JsonProcessingException {
-        return this.versionService.getVersionModel(versionId);
+        if (bypassJackson) {
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(this.versionService.getVersionModelRaw(versionId));
+        } else {
+            return ResponseEntity.ok(this.versionService.getVersionModel(versionId));
+        }
     }
 }

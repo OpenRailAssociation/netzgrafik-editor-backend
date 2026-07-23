@@ -222,8 +222,19 @@ public class VersionService {
         this.authenticationService.getAuthorizationInfo(versionId).assertReadable();
 
         return this.context
-                .fetchOptional(VERSIONS, VERSIONS.ID.eq(versionId.getValue()))
-                .map(this::mapVersion)
+                .select(
+                        VERSIONS.ID,
+                        VERSIONS.VARIANT_ID,
+                        VERSIONS.RELEASE_VERSION,
+                        VERSIONS.SNAPSHOT_VERSION,
+                        VERSIONS.NAME,
+                        VERSIONS.COMMENT,
+                        VERSIONS.CREATED_AT,
+                        VERSIONS.CREATED_BY)
+                .from(VERSIONS)
+                .where(VERSIONS.ID.eq(versionId.getValue()))
+                .fetchOptional()
+                .map(r -> this.mapVersion(r.into(VERSIONS)))
                 .orElseThrow(NotFoundException.of("versions", versionId));
     }
 
@@ -241,9 +252,30 @@ public class VersionService {
     }
 
     @Transactional(readOnly = true)
+    public String getVersionModelRaw(VersionId versionId) throws NotFoundException {
+        var jsonModel =
+                this.context
+                        .select(VERSIONS.MODEL)
+                        .from(VERSIONS)
+                        .where(VERSIONS.ID.eq(versionId.getValue()))
+                        .fetchOptionalInto(JSON.class)
+                        .orElseThrow(NotFoundException.of("versions", versionId));
+        return jsonModel.data();
+    }
+
+    @Transactional(readOnly = true)
     public List<VersionDto> getVersions(VariantId variantId) {
         return this.context
-                .selectFrom(VERSIONS)
+                .select(
+                        VERSIONS.ID,
+                        VERSIONS.VARIANT_ID,
+                        VERSIONS.RELEASE_VERSION,
+                        VERSIONS.SNAPSHOT_VERSION,
+                        VERSIONS.NAME,
+                        VERSIONS.COMMENT,
+                        VERSIONS.CREATED_AT,
+                        VERSIONS.CREATED_BY)
+                .from(VERSIONS)
                 .where(
                         VERSIONS.VARIANT_ID.eq(variantId.getValue()),
                         or(
@@ -256,7 +288,7 @@ public class VersionService {
                                         authenticationService.getCurrentSubjectId().getValue())))
                 .orderBy(
                         VERSIONS.RELEASE_VERSION.asc(), VERSIONS.SNAPSHOT_VERSION.asc().nullsLast())
-                .fetch(this::mapVersion);
+                .fetch(r -> this.mapVersion(r.into(VERSIONS)));
     }
 
     @SneakyThrows // TODO FIXME: Remove
@@ -264,17 +296,36 @@ public class VersionService {
     public VersionDto getLatestVersion(VariantId variantId) {
         var latestRelease =
                 this.context
-                        .selectFrom(VERSIONS)
+                        .select(
+                                VERSIONS.ID,
+                                VERSIONS.VARIANT_ID,
+                                VERSIONS.RELEASE_VERSION,
+                                VERSIONS.SNAPSHOT_VERSION,
+                                VERSIONS.NAME,
+                                VERSIONS.COMMENT,
+                                VERSIONS.CREATED_AT,
+                                VERSIONS.CREATED_BY)
+                        .from(VERSIONS)
                         .where(
                                 VERSIONS.VARIANT_ID.eq(variantId.getValue()),
                                 VERSIONS.SNAPSHOT_VERSION.isNull())
                         .orderBy(VERSIONS.RELEASE_VERSION.desc())
                         .limit(1)
-                        .fetchOptional(this::mapVersion);
+                        .fetchOptional()
+                        .map(r -> this.mapVersion(r.into(VERSIONS)));
 
         var latestSnapshot =
                 this.context
-                        .selectFrom(VERSIONS)
+                        .select(
+                                VERSIONS.ID,
+                                VERSIONS.VARIANT_ID,
+                                VERSIONS.RELEASE_VERSION,
+                                VERSIONS.SNAPSHOT_VERSION,
+                                VERSIONS.NAME,
+                                VERSIONS.COMMENT,
+                                VERSIONS.CREATED_AT,
+                                VERSIONS.CREATED_BY)
+                        .from(VERSIONS)
                         .where(
                                 VERSIONS.VARIANT_ID.eq(variantId.getValue()),
                                 VERSIONS.SNAPSHOT_VERSION.isNotNull(),
@@ -290,7 +341,8 @@ public class VersionService {
                                                                 .getValue())))
                         .orderBy(VERSIONS.RELEASE_VERSION.desc(), VERSIONS.SNAPSHOT_VERSION.desc())
                         .limit(1)
-                        .fetchOptional(this::mapVersion);
+                        .fetchOptional()
+                        .map(r -> this.mapVersion(r.into(VERSIONS)));
 
         if (latestSnapshot.isPresent()) {
             return latestSnapshot.get();
