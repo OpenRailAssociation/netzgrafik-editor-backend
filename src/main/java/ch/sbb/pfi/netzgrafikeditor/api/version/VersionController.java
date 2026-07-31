@@ -101,10 +101,9 @@ public class VersionController {
     @GetMapping(value = "/v1/versions/{versionId}/model")
     public ResponseEntity<?> getVersionModel(
             @PathVariable VersionId versionId,
-            @RequestParam(value = "bypassJackson", required = false, defaultValue = "false")
-                    boolean bypassJackson)
-            throws NotFoundException, JsonProcessingException {
-        if (bypassJackson) {
+            @RequestParam(value = "raw", required = false, defaultValue = "false") boolean raw)
+            throws NotFoundException, ForbiddenOperationException, JsonProcessingException {
+        if (raw) {
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(this.versionService.getVersionModelRaw(versionId));
