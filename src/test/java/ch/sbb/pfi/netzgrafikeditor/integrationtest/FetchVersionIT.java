@@ -27,6 +27,7 @@ public class FetchVersionIT extends IntegrationTest {
         testDataService.insertTestData(
                 List.of(
                         VersionTestData.PROJECT,
+                        VersionTestData.PROJECTS_USERS_A,
                         VersionTestData.VARIANT,
                         VersionTestData.SNAPSHOT_VERSION_1_1));
         controllableNowProvider.setNow(VersionTestData.DATE);
@@ -73,6 +74,20 @@ public class FetchVersionIT extends IntegrationTest {
                         get(
                                         "/v1/versions/{versionId}/model",
                                         VersionTestData.SNAPSHOT_VERSION_1_1.getId())
+                                .contentType("application/json;charset=UTF-8")
+                                .with(user(VersionTestData.USER_A, SecurityConfig.USER_ROLE)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(content().json("{}"));
+    }
+
+    @Test
+    public void fetchVersionModelRaw__expectJson() throws Exception {
+        mockMvc.perform(
+                        get(
+                                        "/v1/versions/{versionId}/model",
+                                        VersionTestData.SNAPSHOT_VERSION_1_1.getId())
+                                .param("raw", "true")
                                 .contentType("application/json;charset=UTF-8")
                                 .with(user(VersionTestData.USER_A, SecurityConfig.USER_ROLE)))
                 .andExpect(status().isOk())

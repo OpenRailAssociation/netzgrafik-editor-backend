@@ -252,7 +252,10 @@ public class VersionService {
     }
 
     @Transactional(readOnly = true)
-    public String getVersionModelRaw(VersionId versionId) throws NotFoundException {
+    public String getVersionModelRaw(VersionId versionId)
+            throws NotFoundException, ForbiddenOperationException {
+        this.authenticationService.getAuthorizationInfo(versionId).assertReadable();
+
         var jsonModel =
                 this.context
                         .select(VERSIONS.MODEL)
