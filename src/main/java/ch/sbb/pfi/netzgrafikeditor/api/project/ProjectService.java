@@ -304,7 +304,15 @@ public class ProjectService {
 
     private List<VersionDto> getLatestReleaseVersions(ProjectId projectId) {
         return this.context
-                .select(VERSIONS.asterisk())
+                .select(
+                        VERSIONS.ID,
+                        VERSIONS.VARIANT_ID,
+                        VERSIONS.RELEASE_VERSION,
+                        VERSIONS.SNAPSHOT_VERSION,
+                        VERSIONS.NAME,
+                        VERSIONS.COMMENT,
+                        VERSIONS.CREATED_AT,
+                        VERSIONS.CREATED_BY)
                 .distinctOn(VERSIONS.VARIANT_ID)
                 .from(VERSIONS)
                 .join(VARIANTS)
@@ -321,7 +329,15 @@ public class ProjectService {
     private List<VersionDto> getLatestSnapshotVersions(
             ProjectId projectId, UserId userId, UserId subId) {
         return this.context
-                .select(VERSIONS.asterisk())
+                .select(
+                        VERSIONS.ID,
+                        VERSIONS.VARIANT_ID,
+                        VERSIONS.RELEASE_VERSION,
+                        VERSIONS.SNAPSHOT_VERSION,
+                        VERSIONS.NAME,
+                        VERSIONS.COMMENT,
+                        VERSIONS.CREATED_AT,
+                        VERSIONS.CREATED_BY)
                 .distinctOn(VERSIONS.VARIANT_ID)
                 .from(VERSIONS)
                 .join(VARIANTS)
