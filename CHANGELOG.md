@@ -7,6 +7,13 @@
 
 * optimize jOOQ variants query - fixes [#58](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/issues/58) ([a71ecb1](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/a71ecb1756604831921ee31c59a85e3fd6b332a9))
 
+## [2.9.0](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/compare/v2.9.0...v2.9.0) (2026-08-25)
+
+
+### Performance Improvements
+
+* optimize jOOQ variants query - fixes [#58](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/issues/58) ([a71ecb1](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/a71ecb1756604831921ee31c59a85e3fd6b332a9))
+
 ## [2.8.1](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/compare/v2.8.1...v2.8.1) (2026-05-04)
 
 
