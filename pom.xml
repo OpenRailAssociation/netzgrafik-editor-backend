@@ -23,7 +23,7 @@
         <flyway.user>${DB_USER}</flyway.user>
         <!--suppress UnresolvedMavenProperty -->
         <flyway.password>${DB_PASSWORD}</flyway.password>
-        <springdoc-openapi.version>2.8.17</springdoc-openapi.version>
+        <springdoc-openapi.version>3.2.0</springdoc-openapi.version>
         <image.namespace>ghcr.io/schweizerischebundesbahnen</image.namespace>
         <image.version>${project.version}</image.version>
     </properties>
