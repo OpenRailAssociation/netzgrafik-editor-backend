@@ -16,6 +16,18 @@ spring:
     password: ${DB_PASSWORD}
     url: ${DB_URL}
 
+server:
+  # automatic response compression (based on Accept-Encoding: gzip)
+  compression:
+    enabled: true
+    mime-types: application/json,application/problem+json,text/plain
+    min-response-size: 2KB
+
+request:
+  decompression:
+    # max. size of a decompressed gzip request body (protection)
+    max-size-bytes: 134217728 # 128 MiB
+
 endpoints:
   web:
     cors:
