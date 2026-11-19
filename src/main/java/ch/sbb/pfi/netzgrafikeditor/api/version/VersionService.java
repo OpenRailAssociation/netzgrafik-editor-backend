@@ -17,10 +17,6 @@ import ch.sbb.pfi.netzgrafikeditor.common.ForbiddenOperationException;
 import ch.sbb.pfi.netzgrafikeditor.common.NotFoundException;
 import ch.sbb.pfi.netzgrafikeditor.common.NowProvider;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +25,9 @@ import org.jooq.DSLContext;
 import org.jooq.JSON;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -239,8 +238,7 @@ public class VersionService {
     }
 
     @Transactional(readOnly = true)
-    public JsonNode getVersionModel(VersionId versionId)
-            throws NotFoundException, JsonProcessingException {
+    public JsonNode getVersionModel(VersionId versionId) throws NotFoundException {
         var jsonModel =
                 this.context
                         .select(VERSIONS.MODEL)

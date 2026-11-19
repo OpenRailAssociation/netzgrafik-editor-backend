@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.16</version>
+        <version>4.1.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ch.sbb.pfi.netzgrafikeditor</groupId>
@@ -23,7 +23,7 @@
         <flyway.user>${DB_USER}</flyway.user>
         <!--suppress UnresolvedMavenProperty -->
         <flyway.password>${DB_PASSWORD}</flyway.password>
-        <springdoc-openapi.version>2.8.17</springdoc-openapi.version>
+        <springdoc-openapi.version>3.2.0</springdoc-openapi.version>
         <image.namespace>ghcr.io/schweizerischebundesbahnen</image.namespace>
         <image.version>${project.version}</image.version>
     </properties>
@@ -31,7 +31,7 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -72,8 +72,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-flyway</artifactId>
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
@@ -109,6 +109,8 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+            <!-- Jackson 2 is only needed by zjsonpatch in tests; the application uses Jackson 3 -->
+            <scope>test</scope>
         </dependency>
         <dependency>
             <!-- Used for comparing JSON -->
@@ -126,12 +128,12 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <artifactId>spring-boot-starter-webmvc-test</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-test</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security-test</artifactId>
             <scope>test</scope>
         </dependency>
         <!--
