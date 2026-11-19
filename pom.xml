@@ -109,8 +109,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <!-- Jackson 2 is only needed by zjsonpatch in tests; the application uses Jackson 3 -->
-            <scope>test</scope>
+            <!-- Jackson 2 is required at runtime by swagger-core (ModelResolver in OpenApiConfig) and by zjsonpatch in tests; the application itself uses Jackson 3 -->
         </dependency>
         <dependency>
             <!-- Used for comparing JSON -->
