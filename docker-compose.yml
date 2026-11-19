@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:15
+    image: postgres:18
     environment:
       - POSTGRES_USER=netzgrafikeditor
       - POSTGRES_PASSWORD=netzgrafikeditor
