@@ -8,9 +8,6 @@ import ch.sbb.pfi.netzgrafikeditor.common.ConflictException;
 import ch.sbb.pfi.netzgrafikeditor.common.ForbiddenOperationException;
 import ch.sbb.pfi.netzgrafikeditor.common.NotFoundException;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.MediaType;
@@ -22,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import tools.jackson.databind.JsonNode;
 
 @RestController
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -99,8 +98,7 @@ public class VersionController {
     }
 
     @GetMapping(value = "/v1/versions/{versionId}/model")
-    public JsonNode getVersionModel(@PathVariable VersionId versionId)
-            throws NotFoundException, JsonProcessingException {
+    public JsonNode getVersionModel(@PathVariable VersionId versionId) throws NotFoundException {
         return this.versionService.getVersionModel(versionId);
     }
 }

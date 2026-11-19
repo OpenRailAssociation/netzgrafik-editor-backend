@@ -4,13 +4,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flipkart.zjsonpatch.JsonDiff;
 
 import lombok.RequiredArgsConstructor;
 
 import org.junit.jupiter.api.Assertions;
 import org.springframework.stereotype.Service;
+
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -21,10 +23,14 @@ import java.util.stream.StreamSupport;
 @Service
 @RequiredArgsConstructor
 public class JsonHandler {
+    // zjsonpatch operates on Jackson 2 trees, while the application serializes with Jackson 3
+    private static final com.fasterxml.jackson.databind.ObjectMapper JACKSON2_TREE_READER =
+            new com.fasterxml.jackson.databind.ObjectMapper();
+
     private final ObjectMapper om;
 
     public JsonMatcher createMatcher(String jsonString) throws JsonProcessingException {
-        return createMatcher(this.om.readTree(jsonString));
+        return createMatcher(JACKSON2_TREE_READER.readTree(jsonString));
     }
 
     public JsonMatcher createMatcher(JsonNode actual) {
@@ -32,7 +38,7 @@ public class JsonHandler {
     }
 
     public JsonAccessor createAccessor(String jsonString) throws JsonProcessingException {
-        return createAccessor(this.om.readTree(jsonString));
+        return createAccessor(JACKSON2_TREE_READER.readTree(jsonString));
     }
 
     public JsonAccessor createAccessor(JsonNode actual) {
@@ -42,8 +48,8 @@ public class JsonHandler {
     private JsonNode toJsonNode(Object obj) {
         try {
             String expectedJsonString = om.writeValueAsString(obj);
-            return om.readTree(expectedJsonString);
-        } catch (JsonProcessingException e) {
+            return JACKSON2_TREE_READER.readTree(expectedJsonString);
+        } catch (JacksonException | JsonProcessingException e) {
             Assertions.fail("Can not serialize expected object to JSON nodes");
             return null; // never called, assertion will throw runtime exception
         }
