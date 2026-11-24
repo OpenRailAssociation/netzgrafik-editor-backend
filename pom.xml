@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.1.2</version>
+        <version>4.2.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ch.sbb.pfi.netzgrafikeditor</groupId>
@@ -23,7 +23,7 @@
         <flyway.user>${DB_USER}</flyway.user>
         <!--suppress UnresolvedMavenProperty -->
         <flyway.password>${DB_PASSWORD}</flyway.password>
-        <springdoc-openapi.version>3.2.0</springdoc-openapi.version>
+        <springdoc-openapi.version>3.2.1</springdoc-openapi.version>
         <image.namespace>ghcr.io/schweizerischebundesbahnen</image.namespace>
         <image.version>${project.version}</image.version>
     </properties>
