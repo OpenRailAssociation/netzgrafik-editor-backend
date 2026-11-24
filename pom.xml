@@ -9,7 +9,7 @@
     </parent>
     <groupId>ch.sbb.pfi.netzgrafikeditor</groupId>
     <artifactId>netzgrafik-editor-backend</artifactId>
-    <version>3.0.2</version>
+    <version>3.0.3</version>
     <name>netzgrafik-editor-backend</name>
     <description>Netzgrafik-Editor Backend</description>
 
