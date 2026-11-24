@@ -42,6 +42,48 @@
 * **CODE_OF_CONDUCT:** update email address ([574af72](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/574af72ee6324d7e2d907a2302ce538729cb2de3))
 * **readme:** update README and add license ([8d34770](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/8d34770a2d45dc2b4f844905f68364ece767c6af))
 
+## [3.0.3](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/compare/v3.0.3...v3.0.3) (2026-11-24)
+
+
+### Features
+
+* **pr-template:** add pull request template ([54970a1](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/54970a1d272be6942e951e94f1ca5c1f510ceaf9))
+* release 2.8.0 ([148913f](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/148913f9d0248c74599a311a1deeeeff1959a948))
+
+
+### Bug Fixes
+
+* add new extra comment line ([6546503](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/654650399a735e3ced29eccc65a877b48715a6da))
+* change log ([32e898d](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/32e898df6c00d827d131538d9481961e2f32dc96))
+* **deps:** bump org.springframework.boot:spring-boot-starter-parent ([d830e85](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/d830e85f734501d9f38d656dd311ecb709990975))
+* **deps:** bump org.springframework.boot:spring-boot-starter-parent from 3.5.16 to 4.1.2 ([7a502d0](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/7a502d05040c21b90121c5692f603afdd350588c))
+* **deps:** bump Spring Boot parent to 3.5.16 ([fabba0f](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/fabba0fa07ce99dafb66046ac9b27c280e06db0a))
+* **deps:** bump Spring Boot parent to 3.5.16 ([200c4c5](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/200c4c547f309fcae99f041d7cbfb9d81bdd04eb))
+* **deps:** bump the maven-minor-patch group with 3 updates ([fdaafaa](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/fdaafaa0a855b2330047ba5a5c82ac5ecdf01800))
+* **deps:** bump the maven-minor-patch group with 3 updates ([93199fd](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/93199fd81e0471cff8af1ddce27144750f22bc35))
+* **deps:** migrate to Spring Boot 4 ([27aef06](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/27aef0698de18a6108d8e27fb967e47798f007ba))
+* **deps:** restore Jackson 2 databind at runtime for swagger-core ([797cff9](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/797cff9511db1e2930c184fb9a416b2cb2f6ea80))
+* **deps:** restore Jackson 2 databind at runtime for swagger-core ([c9cec5a](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/c9cec5a6d6f040f343f62668ad104f72813bb536))
+* push image in separate command ([994a4cb](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/994a4cb9cabceda9830d2071a0a6e33904165b49))
+* redo / update name ([982db76](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/982db76e75a79397328b14933f2d94df8e756f53))
+* release 2.7.5 ([e23acbc](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/e23acbcea32f6a67b82fed81085a1c60d011c3c1))
+* undo change ([79fe9a6](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/79fe9a6d14b029470d42d808c6ff2e6dafbe33db))
+* user email ignore equalIgnoreCase ([bac3a81](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/bac3a8156ec27b29e8a0fefb370de0526901a89a))
+
+
+### Performance Improvements
+
+* optimize jOOQ variants query - fixes [#58](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/issues/58) ([a71ecb1](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/a71ecb1756604831921ee31c59a85e3fd6b332a9))
+* optimize jOOQ variants query - fixes [#58](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/issues/58) ([06ad7fb](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/06ad7fb5e211f5c7c59d82d4d2715b4543c108dd))
+* support gzip-compressed requests and responses ([2558691](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/255869196fe51fe81c31b35e091a7a513e69a626))
+* Support gzip-compressed requests and responses ([c60790e](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/c60790e9923800e647ca4e738cfeab17e552576e))
+
+
+### Documentation
+
+* **CODE_OF_CONDUCT:** update email address ([574af72](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/574af72ee6324d7e2d907a2302ce538729cb2de3))
+* **readme:** update README and add license ([8d34770](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/commit/8d34770a2d45dc2b4f844905f68364ece767c6af))
+
 ## [3.0.2](https://github.com/OpenRailAssociation/netzgrafik-editor-backend/compare/v3.0.2...v3.0.2) (2026-11-20)
 
 
